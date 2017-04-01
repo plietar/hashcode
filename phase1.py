@@ -16,6 +16,9 @@ def inclusive_range(a, b, inc):
 
 for x in range(H):
   for y in range(W):
+    dWallX = 0
+    dWallY = 0
+
     if DATA[x][y] == '#':
       continue
 
@@ -28,6 +31,9 @@ for x in range(H):
       for j in range(max(0, y-R), min(y+R,W-1)+1):
         if DATA[i][j] == '#':
           assert i != x or j != y
+
+          dWallX = max(dWallX, abs(x-i))
+          dWallY = max(dWallY, abs(y-j))
 
           dx = -1 if i < x else (1 if i > x else 0)
           dy = -1 if j < y else (1 if j > y else 0)
@@ -51,7 +57,7 @@ for x in range(H):
                   coverage[x][y].remove((k,l))
 
     if coverage[x][y]:
-      sorted_coverage.append((x,y, coverage[x][y]))
+      sorted_coverage.append((x,y, coverage[x][y], dWallX, dWallY))
 
 sorted_coverage.sort(key=lambda d: len(d[2]))
 

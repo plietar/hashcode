@@ -40,6 +40,8 @@ while True:
   cost = len(routers) * Pr + len(backbone) * Pb - 1
 
   print("%d / %d -> %d" % (cost, B, B - cost))
+  if B - cost == 105:
+      break
   if cost <= B:
     if B - cost < Pr or not deleted_routers:
       break
