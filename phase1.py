@@ -32,9 +32,21 @@ for x in range(H):
           dx = -1 if i < x else (1 if i > x else 0)
           dy = -1 if j < y else (1 if j > y else 0)
 
-          for k in inclusive_range(i, max(0, min(H-1, i+R*dx)), dx):
-            for l in inclusive_range(j, max(0, min(W-1, j+R*dy)), dy):
-              if DATA[k][l] == '.':
+          if dx == 0:
+            for k in range(max(0, min(H-1, x-R)), max(0, min(H-1, x+R))):
+              for l in inclusive_range(j, max(0, min(W-1, j+R*dy)), dy):
+                if (k,l) in coverage[x][y]:
+                  coverage[x][y].remove((k,l))
+
+          elif dy == 0:
+            for k in inclusive_range(i, max(0, min(H-1, i+R*dx)), dx):
+              for l in range(max(0, min(W-1, y-R)), max(0, min(H-1, y+R))):
+                if (k,l) in coverage[x][y]:
+                  coverage[x][y].remove((k,l))
+
+          else:
+            for k in inclusive_range(i, max(0, min(H-1, i+R*dx)), dx):
+              for l in inclusive_range(j, max(0, min(W-1, j+R*dy)), dy):
                 if (k,l) in coverage[x][y]:
                   coverage[x][y].remove((k,l))
 
